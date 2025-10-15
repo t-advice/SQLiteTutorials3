@@ -11,7 +11,7 @@ namespace SQLiteTutorials3.Models
     {
         // tis defines what a single contact looks like . 4 tables in the database.
         [PrimaryKey, AutoIncrement]
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
         public DateTime CreatedAt { get; set; }=DateTime.Now;

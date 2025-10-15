@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SQLite;
 using SQLiteTutorials3.Models;
+using Contact = SQLiteTutorials3.Models.Contact;
 
 namespace SQLiteTutorials3.Services
 {
