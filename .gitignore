@@ -1,0 +1,41 @@
+﻿# Build Folders
+bin/
+obj/
+AppPackages/
+BundleArtifacts/
+Project.lock.json
+project.fragment.lock.json
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.csproj.user
+
+# Visual Studio files
+.vs/
+.idea/
+.vscode/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# MAUI/Android/iOS specific
+*.apk
+*.aab
+*.ipa
+
+# NuGet packages
+*.nupkg
+packages/
+.nuget/
+*.snupkg
+
+# SQLite database files
+*.db3
+*.db
