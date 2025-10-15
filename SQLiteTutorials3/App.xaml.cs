@@ -12,14 +12,16 @@ namespace SQLiteTutorials3
             get
             {
                 if (_database == null)
-                { 
-                    string dbPath = Path.Combine(FileSystem.AppDataDirectory, "Contacts.db3");
+                {
+                    string dbPath = Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                        "Contacts.db3"
+                    );
 
-                };
-                _database = new DatabaseService(dbPath)
-                
+                    _database = new DatabaseService(dbPath);
+                }
+                return _database;
             }
-            return _database;
         }
 
 

@@ -1,24 +1,70 @@
-﻿namespace SQLiteTutorials3
+﻿using SQLiteTutorials3.Models;
+using Contact = SQLiteTutorials3.Models.Contact;
+
+namespace SQLiteTutorials3
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
-
         public MainPage()
         {
             InitializeComponent();
         }
 
-        private void OnCounterClicked(object? sender, EventArgs e)
+        protected override async void OnAppearing()
         {
-            count++;
+            base.OnAppearing();
+            await LoadContacts();
+        }
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
+        private async Task LoadContacts()
+        {
+            ContactsList.ItemsSource = await App.Database.GetContactAsync();
+        }
+
+        private async void OnSaveContactClicked(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(NameEntry.Text) && !string.IsNullOrWhiteSpace(PhoneEntry.Text))
+            {
+                var contact = new Contact
+                {
+                    Name = NameEntry.Text,
+                    Phone = PhoneEntry.Text
+                };
+
+                await App.Database.SaveContactAsync(contact);
+
+                NameEntry.Text = string.Empty;
+                PhoneEntry.Text = string.Empty;
+
+                await LoadContacts();
+            }
             else
-                CounterBtn.Text = $"Clicked {count} times";
+            {
+                await DisplayAlert("Error", "Please fill in both fields.", "OK");
+            }
+        }
 
-            SemanticScreenReader.Announce(CounterBtn.Text);
+        private async void OnDeleteContactClicked(object sender, EventArgs e)
+        {
+            var button = sender as Button;
+            var contact = button?.CommandParameter as Contact;
+
+            if (contact != null)
+            {
+                bool confirm = await DisplayAlert(
+                    "Delete Contact",
+                    $"Are you sure you want to delete {contact.Name}?",
+                    "Yes",
+                    "No"
+                );
+
+                if (confirm)
+                {
+                    await App.Database.DeleteContactAsync(contact);
+                    await LoadContacts();
+                }
+            }
         }
     }
 }
+
